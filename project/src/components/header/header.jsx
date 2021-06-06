@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import {Link} from 'react-router-dom';
-import {AppRoute} from "../../const";
-import Logo from "../logo/logo";
+import {AppRoute} from '../../const';
+import Logo from '../logo/logo';
 
 function Header() {
   return (
@@ -30,7 +30,7 @@ function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
 export default Header;

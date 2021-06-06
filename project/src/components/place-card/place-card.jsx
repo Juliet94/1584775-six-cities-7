@@ -1,13 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {AppRoute} from "../../const";
+import {AppRoute} from '../../const';
 
 function PlaceCard({isMainPage}) {
-  console.log(isMainPage);
   return (
-    <article className={(isMainPage ? 'cities__place-card ' : 'near-places__card ') + ('place-card')}>
-      <div className={(isMainPage ? 'cities__image-wrapper ' : 'near-places__image-wrapper ') + ('place-card__image-wrapper')}>
+    <article className={isMainPage ? 'cities__place-card place-card' : 'near-places__card place-card'}>
+      <div className={isMainPage ? 'cities__image-wrapper place-card__image-wrapper' : 'near-places__image-wrapper place-card__image-wrapper'}>
         <Link href="#" to={AppRoute.OFFER}>
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
         </Link>
@@ -42,6 +41,6 @@ function PlaceCard({isMainPage}) {
 
 PlaceCard.propTypes = {
   isMainPage: PropTypes.bool.isRequired,
-}
+};
 
 export default PlaceCard;

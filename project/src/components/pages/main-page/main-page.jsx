@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../../place-card/place-card';
-import Header from "../../header/header";
+import Header from '../../header/header';
 
-const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf']
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 function MainPage({CityPlaceCardsCount}) {
 
@@ -15,12 +15,12 @@ function MainPage({CityPlaceCardsCount}) {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((name) =>
-                <li className="locations__item">
+              {CITIES.map((name) => (
+                <li className="locations__item" key={name}>
                   <a className="locations__item-link tabs__item" href="#">
                     <span>{name}</span>
                   </a>
-                </li>
+                </li>),
               )}
             </ul>
           </section>
@@ -47,7 +47,7 @@ function MainPage({CityPlaceCardsCount}) {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {new Array(CityPlaceCardsCount).fill(null).map((place) =>
-                    <PlaceCard key={place} isMainPage ={true} />)}
+                  <PlaceCard key={place} isMainPage />)}
               </div>
             </section>
             <div className="cities__right-section">

@@ -1,13 +1,13 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {AppRoute} from "../../const";
+import {AppRoute} from '../../const';
 
 import MainPage from '../pages/main-page/main-page';
-import OfferPage from "../pages/offer-page/offer-page";
-import FavoritesPage from "../pages/favorites-page/favorites-page";
-import LoginPage from "../pages/login-page/login-page";
-import NotFoundPage from "../pages/not-found-page/not-found-page";
+import OfferPage from '../pages/offer-page/offer-page';
+import FavoritesPage from '../pages/favorites-page/favorites-page';
+import LoginPage from '../pages/login-page/login-page';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App({CityPlaceCardsCount, NearPlaceCardsCount}) {
   return (

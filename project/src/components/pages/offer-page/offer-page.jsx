@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from "../../place-card/place-card";
-import Header from "../../header/header";
+import PlaceCard from '../../place-card/place-card';
+import Header from '../../header/header';
 
-const IMAGES = ['room', 'apartment-01', 'apartment-02', 'apartment-03', 'studio-01', 'apartment-01'];
+const IMAGES = ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg'];
 const PROPERTIES = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 
 function OfferPage({NearPlaceCardsCount}) {
@@ -14,10 +14,10 @@ function OfferPage({NearPlaceCardsCount}) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {IMAGES.map((image) =>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src={'img/' + image + '.jpg'} alt="Photo studio"/>
-                </div>
+              {IMAGES.map((image) => (
+                <div className="property__image-wrapper" key={image}>
+                  <img className="property__image" src={image} alt="Photo studio"/>
+                </div>),
               )}
             </div>
           </div>
@@ -63,7 +63,7 @@ function OfferPage({NearPlaceCardsCount}) {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {PROPERTIES.map((property) =>
-                  <li className="property__inside-item">{property}</li>)}
+                    <li className="property__inside-item" key={property}>{property}</li>)}
                 </ul>
               </div>
               <div className="property__host">
@@ -121,39 +121,39 @@ function OfferPage({NearPlaceCardsCount}) {
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
                   <div className="reviews__rating-form form__rating">
                     <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                      <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                        <svg className="form__star-image" width="37" height="33">
-                          <use xlinkHref="#icon-star" />
-                        </svg>
-                      </label>
+                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star" />
+                      </svg>
+                    </label>
 
-                      <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                          <svg className="form__star-image" width="37" height="33">
-                            <use xlinkHref="#icon-star" />
-                          </svg>
-                        </label>
+                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
+                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star" />
+                      </svg>
+                    </label>
 
-                        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                          <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                            <svg className="form__star-image" width="37" height="33">
-                              <use xlinkHref="#icon-star" />
-                            </svg>
-                          </label>
+                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
+                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star" />
+                      </svg>
+                    </label>
 
-                          <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                            <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                              <svg className="form__star-image" width="37" height="33">
-                                <use xlinkHref="#icon-star" />
-                              </svg>
-                            </label>
+                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
+                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star" />
+                      </svg>
+                    </label>
 
-                            <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                              <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                                <svg className="form__star-image" width="37" height="33">
-                                  <use xlinkHref="#icon-star" />
-                                </svg>
-                              </label>
+                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
+                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
+                      <svg className="form__star-image" width="37" height="33">
+                        <use xlinkHref="#icon-star" />
+                      </svg>
+                    </label>
                   </div>
                   <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" />
                   <div className="reviews__button-wrapper">
@@ -174,8 +174,8 @@ function OfferPage({NearPlaceCardsCount}) {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {new Array(NearPlaceCardsCount).fill(null).map((place) =>
-                <PlaceCard key={place} isMainPage ={false} />
-              )}
+                <PlaceCard key={place} isMainPage ={false} />,
+              )};
             </div>
           </section>
         </div>
@@ -186,6 +186,6 @@ function OfferPage({NearPlaceCardsCount}) {
 
 OfferPage.propTypes = {
   NearPlaceCardsCount: PropTypes.number.isRequired,
-}
+};
 
 export default OfferPage;

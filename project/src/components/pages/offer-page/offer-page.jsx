@@ -6,7 +6,7 @@ import Header from '../../header/header';
 const IMAGES = ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg'];
 const PROPERTIES = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 
-function OfferPage({NearPlaceCardsCount}) {
+function OfferPage({nearPlaceCardsCount}) {
   return (
     <div className="page">
       <Header />
@@ -173,7 +173,7 @@ function OfferPage({NearPlaceCardsCount}) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {new Array(NearPlaceCardsCount).fill(null).map((place) =>
+              {new Array(nearPlaceCardsCount).fill(null).map((place) =>
                 <PlaceCard key={place} isMainPage ={false} />,
               )};
             </div>
@@ -185,7 +185,7 @@ function OfferPage({NearPlaceCardsCount}) {
 }
 
 OfferPage.propTypes = {
-  NearPlaceCardsCount: PropTypes.number.isRequired,
+  nearPlaceCardsCount: PropTypes.number.isRequired,
 };
 
 export default OfferPage;

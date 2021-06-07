@@ -5,7 +5,7 @@ import Header from '../../header/header';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-function MainPage({CityPlaceCardsCount}) {
+function MainPage({cityPlaceCardsCount}) {
 
   return (
     <div className="page page--gray page--main">
@@ -15,10 +15,10 @@ function MainPage({CityPlaceCardsCount}) {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((name) => (
-                <li className="locations__item" key={name}>
+              {CITIES.map((city) => (
+                <li className="locations__item" key={city}>
                   <a className="locations__item-link tabs__item" href="#">
-                    <span>{name}</span>
+                    <span>{city}</span>
                   </a>
                 </li>),
               )}
@@ -46,7 +46,7 @@ function MainPage({CityPlaceCardsCount}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(CityPlaceCardsCount).fill(null).map((place) =>
+                {new Array(cityPlaceCardsCount).fill(null).map((place) =>
                   <PlaceCard key={place} isMainPage />)}
               </div>
             </section>
@@ -61,7 +61,7 @@ function MainPage({CityPlaceCardsCount}) {
 }
 
 MainPage.propTypes = {
-  CityPlaceCardsCount: PropTypes.number.isRequired,
+  cityPlaceCardsCount: PropTypes.number.isRequired,
 };
 
 export default MainPage;

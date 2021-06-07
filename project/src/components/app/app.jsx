@@ -9,15 +9,15 @@ import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
-function App({CityPlaceCardsCount, NearPlaceCardsCount}) {
+function App({cityPlaceCardsCount, nearPlaceCardsCount}) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage CityPlaceCardsCount={CityPlaceCardsCount}/>
+          <MainPage cityPlaceCardsCount={cityPlaceCardsCount}/>
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <OfferPage NearPlaceCardsCount={NearPlaceCardsCount} />
+          <OfferPage nearPlaceCardsCount={nearPlaceCardsCount} />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
           <FavoritesPage />
@@ -34,8 +34,8 @@ function App({CityPlaceCardsCount, NearPlaceCardsCount}) {
 }
 
 App.propTypes = {
-  CityPlaceCardsCount: PropTypes.number.isRequired,
-  NearPlaceCardsCount: PropTypes.number.isRequired,
+  cityPlaceCardsCount: PropTypes.number.isRequired,
+  nearPlaceCardsCount: PropTypes.number.isRequired,
 };
 
 export default App;

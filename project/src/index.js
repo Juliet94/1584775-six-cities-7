@@ -8,8 +8,8 @@ const NEAR_PLACE_CARDS_COUNT = 3;
 ReactDOM.render(
   <React.StrictMode>
     <App
-      CityPlaceCardsCount = {CITY_PLACE_CARDS_COUNT}
-      NearPlaceCardsCount = {NEAR_PLACE_CARDS_COUNT}
+      cityPlaceCardsCount = {CITY_PLACE_CARDS_COUNT}
+      nearPlaceCardsCount= {NEAR_PLACE_CARDS_COUNT}
     />,
   </React.StrictMode>,
   document.getElementById('root'),

@@ -3,18 +3,25 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 
+import offersProp from './offers.prop';
+/* import reviewsProp from './reviews.prop'; */
+
 import MainPage from '../pages/main-page/main-page';
 import OfferPage from '../pages/offer-page/offer-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
-function App({cityPlaceCardsCount, nearPlaceCardsCount}) {
+function App(props) {
+  const {nearPlaceCardsCount} = props;
+  const {offers} = props;
+  /* const {reviews} = props; */
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage cityPlaceCardsCount={cityPlaceCardsCount}/>
+          <MainPage offers={offers}/>
         </Route>
         <Route exact path={AppRoute.OFFER}>
           <OfferPage nearPlaceCardsCount={nearPlaceCardsCount} />
@@ -34,7 +41,7 @@ function App({cityPlaceCardsCount, nearPlaceCardsCount}) {
 }
 
 App.propTypes = {
-  cityPlaceCardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
   nearPlaceCardsCount: PropTypes.number.isRequired,
 };
 

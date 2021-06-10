@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../../place-card/place-card';
 import Header from '../../header/header';
+import offersProp from '../../app/offers.prop';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-function MainPage({cityPlaceCardsCount}) {
+function MainPage({offers}) {
 
   return (
     <div className="page page--gray page--main">
@@ -46,8 +47,8 @@ function MainPage({cityPlaceCardsCount}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(cityPlaceCardsCount).fill(null).map((place) =>
-                  <PlaceCard key={place} isMainPage />)}
+                {offers.map((offer) =>
+                  <PlaceCard key={offer.id} isMainPage offer = {offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
@@ -61,7 +62,7 @@ function MainPage({cityPlaceCardsCount}) {
 }
 
 MainPage.propTypes = {
-  cityPlaceCardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default MainPage;

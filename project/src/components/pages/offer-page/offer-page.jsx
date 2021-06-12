@@ -1,13 +1,22 @@
 import React from 'react';
+import {useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import offersProp from '../../app/offers.prop';
+import reviewsProp from '../../app/reviews.prop';
+
 import PlaceCardList from '../../place-card-list/place-card-list';
 import Header from '../../header/header';
-import offersProp from '../../app/offers.prop';
-import {Colors, PlaceCardPageType} from '../../../const';
-import {getPlaceRatingPercent} from "../../../utils/place-card";
-import ReviewForm from "../../review-form/review-form";
+import ReviewForm from '../../review-form/review-form';
+import ReviewList from '../../review-list/review-list';
 
-function OfferPage({offers}) {
+import {Colors, PlaceCardPageType} from '../../../const';
+import {getPlaceRatingPercent} from '../../../utils/place-card';
+
+function OfferPage({offers, reviews}) {
+  const location = useLocation();
+
+  const offer = offers.find((offerItem) => offerItem.id === location.state);
+
   const {
     images,
     title,
@@ -21,7 +30,7 @@ function OfferPage({offers}) {
     goods,
     host,
     description,
-  } = offers[2];
+  } = offer;
 
   const placeRating = getPlaceRatingPercent(rating);
 
@@ -42,9 +51,9 @@ function OfferPage({offers}) {
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium && (
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
               )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -52,8 +61,9 @@ function OfferPage({offers}) {
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33"
-                       style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
-                         fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}>
+                    style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
+                      fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}
+                  >
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -98,9 +108,9 @@ function OfferPage({offers}) {
                     {host.name}
                   </span>
                   {host.isPro && (
-                  <span className="property__user-status">
+                    <span className="property__user-status">
                     Pro
-                  </span>
+                    </span>
                   )}
                 </div>
                 <div className="property__description">
@@ -110,32 +120,8 @@ function OfferPage({offers}) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}} />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
-                        The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewList reviews={reviews} />
                 <ReviewForm />
               </section>
             </div>
@@ -146,7 +132,7 @@ function OfferPage({offers}) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-            <PlaceCardList offers={offers} pageType={PlaceCardPageType.OFFER}/>
+              <PlaceCardList offers={offers} pageType={PlaceCardPageType.OFFER}/>
             </div>
           </section>
         </div>
@@ -157,6 +143,7 @@ function OfferPage({offers}) {
 
 OfferPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
 export default OfferPage;

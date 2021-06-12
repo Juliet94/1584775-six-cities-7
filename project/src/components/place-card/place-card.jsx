@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link, generatePath} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {AppRoute, Colors, PlaceCardPageType} from '../../const';
 import offersProp from '../app/offers.prop';
+import {AppRoute, Colors, PlaceCardPageType} from '../../const';
 import {getPlaceRatingPercent} from '../../utils/place-card';
 
 function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
@@ -14,25 +14,25 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
     title,
     type,
     isFavorite,
-    isPremium
+    isPremium,
   } = offer;
 
   const placeRating = getPlaceRatingPercent(rating);
 
   return (
     <article className={`${pageType.CLASS_LIST_ELEMENT} place-card`}
-             onMouseEnter={pageType.TYPE === PlaceCardPageType.MAIN.TYPE ? () => {
-               activePlaceCard = null;
-               setActivePlaceCard(id);
-             } : null}
+      onMouseEnter={pageType.TYPE === PlaceCardPageType.MAIN.TYPE ? () => {
+        activePlaceCard = null;
+        setActivePlaceCard(id);
+      } : null}
     >
       {isPremium && (
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
       )}
       <div className={`${pageType.CLASS_LIST_ELEMENT_WRAPPER} place-card__image-wrapper`}>
-        <Link href="#" to={generatePath(AppRoute.OFFER, {id})}>
+        <Link to={{pathname: generatePath(AppRoute.OFFER, { id }), state: id }}>
           <img className="place-card__image" src={previewImage} width={pageType.CARD_IMAGE_WIDTH} height={pageType.CARD_IMAGE_HEIGHT} alt="Place image" />
         </Link>
       </div>
@@ -44,9 +44,9 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
           </div>
           <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19"
-                 style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
-                   fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}
-                 >
+              style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
+                fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}
+            >
               <use xlinkHref="#icon-bookmark" />
             </svg>
             <span className="visually-hidden">To bookmarks</span>
@@ -59,7 +59,7 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link href="#" to={generatePath(AppRoute.OFFER, {id})}>{title}</Link>
+          <Link to={{pathname: generatePath(AppRoute.OFFER, { id }), state: id }}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -69,6 +69,9 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
 
 PlaceCard.propTypes = {
   offer: offersProp,
+  pageType: PropTypes.object.isRequired,
+  setActivePlaceCard: PropTypes.func,
+  activePlaceCard: PropTypes.number,
 };
 
 export default PlaceCard;

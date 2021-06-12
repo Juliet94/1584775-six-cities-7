@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 
 import offersProp from './offers.prop';
-/* import reviewsProp from './reviews.prop'; */
+import reviewsProp from './reviews.prop';
 
 import MainPage from '../pages/main-page/main-page';
 import OfferPage from '../pages/offer-page/offer-page';
@@ -12,10 +12,7 @@ import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
-function App(props) {
-  const {offers} = props;
-  /* const {reviews} = props; */
-
+function App({offers, reviews}) {
   return (
     <BrowserRouter>
       <Switch>
@@ -23,7 +20,7 @@ function App(props) {
           <MainPage offers={offers}/>
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <OfferPage offers={offers} />
+          <OfferPage offers={offers} reviews={reviews} />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
           <FavoritesPage offers={offers} />
@@ -41,6 +38,7 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
 export default App;

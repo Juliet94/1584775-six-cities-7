@@ -33,4 +33,4 @@ export const PlaceCardPageType = {
 export const Colors = {
   FAVORITE_CHECKED: '#4481c3',
   FAVORITE_NOT_CHECKED: '#979797',
-}
+};

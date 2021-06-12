@@ -1,6 +1,8 @@
-import React from "react";
-import PlaceCard from "../place-card/place-card";
-import {PlaceCardPageType} from "../../const";
+import React from 'react';
+import PropTypes from 'prop-types';
+import offersProp from '../app/offers.prop';
+import PlaceCard from '../place-card/place-card';
+import {PlaceCardPageType} from '../../const';
 
 function FavoritesListItem({favoriteOffers, favoriteCity}) {
   return (
@@ -14,11 +16,19 @@ function FavoritesListItem({favoriteOffers, favoriteCity}) {
       </div>
       <div className="favorites__places">
         {favoriteOffers.map((offer) =>
-          <PlaceCard key={offer.id} offer={offer} pageType={PlaceCardPageType.FAVORITE} />
+          <PlaceCard key={offer.id} offer={offer} pageType={PlaceCardPageType.FAVORITE} />,
         )}
       </div>
     </li>
   );
 }
+
+FavoritesListItem.propTypes = {
+  favoriteOffers: PropTypes.oneOfType([
+    PropTypes.arrayOf(offersProp),
+    offersProp,
+  ]).isRequired,
+  favoriteCity: PropTypes.string.isRequired,
+};
 
 export default FavoritesListItem;

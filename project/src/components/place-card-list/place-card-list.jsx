@@ -16,6 +16,7 @@ function PlaceCardList({offers, pageType}) {
 
 PlaceCardList.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
+  pageType: PropTypes.object.isRequired,
 };
 
 export default PlaceCardList;

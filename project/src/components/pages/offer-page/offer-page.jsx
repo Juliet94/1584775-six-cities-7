@@ -1,12 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../../place-card/place-card';
+import PlaceCardList from '../../place-card-list/place-card-list';
 import Header from '../../header/header';
+import offersProp from '../../app/offers.prop';
+import {Colors, PlaceCardPageType} from '../../../const';
+import {getPlaceRatingPercent} from "../../../utils/place-card";
+import ReviewForm from "../../review-form/review-form";
 
-const IMAGES = ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg'];
-const PROPERTIES = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
+function OfferPage({offers}) {
+  const {
+    images,
+    title,
+    isPremium,
+    isFavorite,
+    rating,
+    type,
+    bedrooms,
+    maxAdults,
+    price,
+    goods,
+    host,
+    description,
+  } = offers[2];
 
-function OfferPage({nearPlaceCardsCount}) {
+  const placeRating = getPlaceRatingPercent(rating);
+
   return (
     <div className="page">
       <Header />
@@ -14,7 +32,7 @@ function OfferPage({nearPlaceCardsCount}) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {IMAGES.map((image) => (
+              {images.map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>),
@@ -23,15 +41,19 @@ function OfferPage({nearPlaceCardsCount}) {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
+              {isPremium && (
               <div className="property__mark">
                 <span>Premium</span>
               </div>
+              )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className="property__bookmark-icon" width="31" height="33"
+                       style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
+                         fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -39,30 +61,30 @@ function OfferPage({nearPlaceCardsCount}) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}} />
+                  <span style={{width: placeRating}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} {bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} {maxAdults > 1 ? 'adults' : 'adult'}
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {PROPERTIES.map((property) =>
+                  {goods.map((property) =>
                     <li className="property__inside-item" key={property}>{property}</li>)}
                 </ul>
               </div>
@@ -70,23 +92,20 @@ function OfferPage({nearPlaceCardsCount}) {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {host.name}
                   </span>
+                  {host.isPro && (
                   <span className="property__user-status">
                     Pro
                   </span>
+                  )}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                    building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where
-                    the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>
@@ -117,53 +136,7 @@ function OfferPage({nearPlaceCardsCount}) {
                     </div>
                   </li>
                 </ul>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" />
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and
-                      describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                  </div>
-                </form>
+                <ReviewForm />
               </section>
             </div>
           </div>
@@ -173,9 +146,7 @@ function OfferPage({nearPlaceCardsCount}) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {new Array(nearPlaceCardsCount).fill(null).map((place) =>
-                <PlaceCard key={place} isMainPage ={false} />,
-              )};
+            <PlaceCardList offers={offers} pageType={PlaceCardPageType.OFFER}/>
             </div>
           </section>
         </div>
@@ -185,7 +156,7 @@ function OfferPage({nearPlaceCardsCount}) {
 }
 
 OfferPage.propTypes = {
-  nearPlaceCardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default OfferPage;

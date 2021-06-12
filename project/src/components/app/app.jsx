@@ -13,7 +13,6 @@ import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App(props) {
-  const {nearPlaceCardsCount} = props;
   const {offers} = props;
   /* const {reviews} = props; */
 
@@ -24,10 +23,10 @@ function App(props) {
           <MainPage offers={offers}/>
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <OfferPage nearPlaceCardsCount={nearPlaceCardsCount} />
+          <OfferPage offers={offers} />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage />
+          <FavoritesPage offers={offers} />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
@@ -42,7 +41,6 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
-  nearPlaceCardsCount: PropTypes.number.isRequired,
 };
 
 export default App;

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../../place-card/place-card';
+import PlaceCardList from '../../place-card-list/place-card-list';
 import Header from '../../header/header';
 import offersProp from '../../app/offers.prop';
+import {PlaceCardPageType} from '../../../const';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -47,8 +48,7 @@ function MainPage({offers}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) =>
-                  <PlaceCard key={offer.id} isMainPage offer = {offer} />)}
+              <PlaceCardList offers={offers} pageType={PlaceCardPageType.MAIN}/>
               </div>
             </section>
             <div className="cities__right-section">

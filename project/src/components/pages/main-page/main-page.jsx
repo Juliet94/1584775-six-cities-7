@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../../place-card/place-card';
+import offersProp from '../../app/offers.prop';
+import PlaceCardList from '../../place-card-list/place-card-list';
 import Header from '../../header/header';
+import {PlaceCardPageType} from '../../../const';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-function MainPage({CityPlaceCardsCount}) {
+function MainPage({offers}) {
 
   return (
     <div className="page page--gray page--main">
@@ -15,10 +17,10 @@ function MainPage({CityPlaceCardsCount}) {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((name) => (
-                <li className="locations__item" key={name}>
+              {CITIES.map((city) => (
+                <li className="locations__item" key={city}>
                   <a className="locations__item-link tabs__item" href="#">
-                    <span>{name}</span>
+                    <span>{city}</span>
                   </a>
                 </li>),
               )}
@@ -46,8 +48,7 @@ function MainPage({CityPlaceCardsCount}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(CityPlaceCardsCount).fill(null).map((place) =>
-                  <PlaceCard key={place} isMainPage />)}
+                <PlaceCardList offers={offers} pageType={PlaceCardPageType.MAIN}/>
               </div>
             </section>
             <div className="cities__right-section">
@@ -61,7 +62,7 @@ function MainPage({CityPlaceCardsCount}) {
 }
 
 MainPage.propTypes = {
-  CityPlaceCardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default MainPage;

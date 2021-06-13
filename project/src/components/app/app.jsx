@@ -3,24 +3,27 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 
+import offersProp from './offers.prop';
+import reviewsProp from './reviews.prop';
+
 import MainPage from '../pages/main-page/main-page';
 import OfferPage from '../pages/offer-page/offer-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
-function App({CityPlaceCardsCount, NearPlaceCardsCount}) {
+function App({offers, reviews}) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage CityPlaceCardsCount={CityPlaceCardsCount}/>
+          <MainPage offers={offers}/>
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <OfferPage NearPlaceCardsCount={NearPlaceCardsCount} />
+          <OfferPage offers={offers} reviews={reviews} />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage />
+          <FavoritesPage offers={offers} />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
@@ -34,8 +37,8 @@ function App({CityPlaceCardsCount, NearPlaceCardsCount}) {
 }
 
 App.propTypes = {
-  CityPlaceCardsCount: PropTypes.number.isRequired,
-  NearPlaceCardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
 export default App;

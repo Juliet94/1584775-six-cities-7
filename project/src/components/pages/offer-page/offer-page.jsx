@@ -8,8 +8,9 @@ import PlaceCardList from '../../place-card-list/place-card-list';
 import Header from '../../header/header';
 import ReviewForm from '../../review-form/review-form';
 import ReviewList from '../../review-list/review-list';
+import Map from '../../map/map';
 
-import {Colors, PlaceCardPageType} from '../../../const';
+import {Colors, placeCardPageType} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
 
 function OfferPage({offers, reviews}) {
@@ -126,13 +127,15 @@ function OfferPage({offers, reviews}) {
               </section>
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map" >
+            <Map offers={offers} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceCardList offers={offers} pageType={PlaceCardPageType.OFFER}/>
+              <PlaceCardList offers={offers} pageType={placeCardPageType.offer}/>
             </div>
           </section>
         </div>

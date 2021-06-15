@@ -23,7 +23,7 @@ function ReviewForm() {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         minLength={50}
-        onChange={(evt) => onTextChange(evt)}
+        onChange={onTextChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

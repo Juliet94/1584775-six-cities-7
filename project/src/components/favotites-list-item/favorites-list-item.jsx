@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import offersProp from '../app/offers.prop';
 import PlaceCard from '../place-card/place-card';
-import {PlaceCardPageType} from '../../const';
+import {placeCardPageType} from '../../const';
 
 function FavoritesListItem({favoriteOffers, favoriteCity}) {
   return (
@@ -16,7 +16,7 @@ function FavoritesListItem({favoriteOffers, favoriteCity}) {
       </div>
       <div className="favorites__places">
         {favoriteOffers.map((offer) =>
-          <PlaceCard key={offer.id} offer={offer} pageType={PlaceCardPageType.FAVORITE} />,
+          <PlaceCard key={offer.id} offer={offer} pageType={placeCardPageType.favorite} />,
         )}
       </div>
     </li>

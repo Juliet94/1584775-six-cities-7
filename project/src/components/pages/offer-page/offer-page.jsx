@@ -12,10 +12,12 @@ import Map from '../../map/map';
 
 import {Colors, placeCardPageType} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
+import {city} from '../../../mocks/city';
 
 function OfferPage({offers, reviews}) {
   const location = useLocation();
 
+  const nearOffers = offers.filter((offerItem) => offerItem.id !== location.state);
   const offer = offers.find((offerItem) => offerItem.id === location.state);
 
   const {
@@ -128,14 +130,18 @@ function OfferPage({offers, reviews}) {
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={offers} />
+            <Map
+              offers={offers}
+              city={city}
+              selectedPoint={offer}
+            />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceCardList offers={offers} pageType={placeCardPageType.offer}/>
+              <PlaceCardList offers={nearOffers} pageType={placeCardPageType.offer}/>
             </div>
           </section>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, generatePath} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offersProp from '../app/offers.prop';
-import {AppRoute, Colors, PlaceCardPageType} from '../../const';
+import {AppRoute, Colors, placeCardPageType} from '../../const';
 import {getPlaceRatingPercent} from '../../utils/place-card';
 
 function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
@@ -20,8 +20,8 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
   const placeRating = getPlaceRatingPercent(rating);
 
   return (
-    <article className={`${pageType.CLASS_LIST_ELEMENT} place-card`}
-      onMouseEnter={pageType.TYPE === PlaceCardPageType.MAIN.TYPE ? () => {
+    <article className={`${pageType.classListElement} place-card`}
+      onMouseEnter={pageType.type === placeCardPageType.main.type ? () => {
         activePlaceCard = null;
         setActivePlaceCard(id);
       } : null}
@@ -31,9 +31,9 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
           <span>Premium</span>
         </div>
       )}
-      <div className={`${pageType.CLASS_LIST_ELEMENT_WRAPPER} place-card__image-wrapper`}>
+      <div className={`${pageType.classListElementWrapper} place-card__image-wrapper`}>
         <Link to={{pathname: generatePath(AppRoute.OFFER, { id }), state: id }}>
-          <img className="place-card__image" src={previewImage} width={pageType.CARD_IMAGE_WIDTH} height={pageType.CARD_IMAGE_HEIGHT} alt="Place image" />
+          <img className="place-card__image" src={previewImage} width={pageType.cardImageWidth} height={pageType.cardImageHeight} alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">

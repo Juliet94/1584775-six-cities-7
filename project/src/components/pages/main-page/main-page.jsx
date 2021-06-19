@@ -8,6 +8,7 @@ import CitiesList from '../../cities-list/cities-list';
 import Map from '../../map/map';
 
 import {placeCardPageType} from '../../../const';
+import {city} from '../../../mocks/city';
 
 function MainPage({offers}) {
 
@@ -47,7 +48,10 @@ function MainPage({offers}) {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" >
-                <Map offers={offers}/>
+                <Map
+                  offers={offers}
+                  city={city}
+                />
               </section>
             </div>
           </div>

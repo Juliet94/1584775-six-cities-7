@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offersProp from '../../app/offers.prop';
@@ -12,7 +13,6 @@ import Map from '../../map/map';
 
 import {Colors, placeCardPageType} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
-import {city} from '../../../mocks/city';
 
 function OfferPage({offers, reviews}) {
   const location = useLocation();
@@ -132,7 +132,7 @@ function OfferPage({offers, reviews}) {
           <section className="property__map map" >
             <Map
               offers={offers}
-              city={city}
+              city={offers[0].city}
               selectedPoint={offer}
             />
           </section>
@@ -155,4 +155,10 @@ OfferPage.propTypes = {
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
-export default OfferPage;
+const mapStateToProps = (dispatch) => ({
+  offers: dispatch.offers,
+  reviews: dispatch.reviews,
+});
+
+export {OfferPage};
+export default connect(mapStateToProps)(OfferPage);

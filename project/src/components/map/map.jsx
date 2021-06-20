@@ -82,8 +82,8 @@ Map.propTypes = {
   selectedPoint: offersProp,
 };
 
-const mapStateToProps = (dispatch) => ({
-  offers: dispatch.offers,
+const mapStateToProps = (state) => ({
+  offers: state.offers,
 });
 
 export {Map};

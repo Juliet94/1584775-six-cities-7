@@ -155,9 +155,9 @@ OfferPage.propTypes = {
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
-const mapStateToProps = (dispatch) => ({
-  offers: dispatch.offers,
-  reviews: dispatch.reviews,
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  reviews: state.reviews,
 });
 
 export {OfferPage};

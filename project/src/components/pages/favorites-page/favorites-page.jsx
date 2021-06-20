@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offersProp from '../../app/offers.prop';
@@ -35,4 +36,9 @@ FavoritesPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
-export default FavoritesPage;
+const mapStateToProps = (dispatch) => ({
+  offers: dispatch.allOffers,
+});
+
+export {FavoritesPage};
+export default connect(mapStateToProps)(FavoritesPage);

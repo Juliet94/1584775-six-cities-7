@@ -1,4 +1,5 @@
 import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import offersProp from '../app/offers.prop';
 import useMap from '../../hooks/useMap';
@@ -31,7 +32,11 @@ function Map({offers, city, selectedPoint}) {
   }
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
+
     if (map) {
+      markers.addTo(map);
+
       offers.forEach((offer) => {
         leaflet
           .marker({
@@ -42,9 +47,21 @@ function Map({offers, city, selectedPoint}) {
               ? activeIcon
               : defaultIcon,
           })
-          .addTo(map);
+          .addTo(markers);
       });
+
+      map.flyTo(
+        [
+          city.location.latitude,
+          city.location.longitude,
+        ],
+        city.location.zoom,
+      );
     }
+
+    return () => {
+      markers.clearLayers();
+    };
   }, [map, offers, selectedPoint]);
 
   return (
@@ -65,4 +82,9 @@ Map.propTypes = {
   selectedPoint: offersProp,
 };
 
-export default Map;
+const mapStateToProps = (dispatch) => ({
+  offers: dispatch.offers,
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);

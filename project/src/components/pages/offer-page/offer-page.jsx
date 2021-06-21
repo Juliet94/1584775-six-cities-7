@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -13,8 +13,9 @@ import Map from '../../map/map';
 
 import {Colors, placeCardPageType} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
+import {ActionCreator} from '../../../store/action';
 
-function OfferPage({offers, reviews}) {
+function OfferPage({offers, reviews, city, changeActiveCard}) {
   const location = useLocation();
 
   const nearOffers = offers.filter((offerItem) => offerItem.id !== location.state);
@@ -36,6 +37,10 @@ function OfferPage({offers, reviews}) {
   } = offer;
 
   const placeRating = getPlaceRatingPercent(rating);
+
+  useEffect(() => () => {
+    changeActiveCard(null);
+  });
 
   return (
     <div className="page">
@@ -132,8 +137,7 @@ function OfferPage({offers, reviews}) {
           <section className="property__map map" >
             <Map
               offers={offers}
-              city={offers[0].city}
-              selectedPoint={offer}
+              city={offers.find((offerItem) => offerItem.city.name === city).city}
             />
           </section>
         </section>
@@ -153,12 +157,19 @@ function OfferPage({offers, reviews}) {
 OfferPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  city: PropTypes.string.isRequired,
+  changeActiveCard: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (dispatch) => ({
-  offers: dispatch.offers,
-  reviews: dispatch.reviews,
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  reviews: state.reviews,
+  city: state.city,
 });
 
+const mapDispatchToProps = {
+  changeActiveCard: ActionCreator.changeActiveCard,
+};
+
 export {OfferPage};
-export default connect(mapStateToProps)(OfferPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

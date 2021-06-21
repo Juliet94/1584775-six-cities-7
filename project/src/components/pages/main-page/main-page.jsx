@@ -8,10 +8,10 @@ import Header from '../../header/header';
 import MainEmpty from '../../main-empty/main-empty';
 import CitiesList from '../../cities-list/cities-list';
 import Map from '../../map/map';
-import SortForm from "../../sort-form/sort-form";
+import SortForm from '../../sort-form/sort-form';
 
 import {placeCardPageType} from '../../../const';
-import {sortOffers} from "../../../utils/sort";
+import {sortOffers} from '../../../utils/sort';
 
 function MainPage({offers, city, sortType}) {
 
@@ -43,7 +43,7 @@ function MainPage({offers, city, sortType}) {
                 <section className="cities__map map">
                   <Map
                     offers={offers}
-                    city={offers[0].city}
+                    city={offers.find((offer) => offer.city.name === city).city}
                   />
                 </section>
               </div>
@@ -58,6 +58,7 @@ function MainPage({offers, city, sortType}) {
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
   city: PropTypes.string.isRequired,
+  sortType: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

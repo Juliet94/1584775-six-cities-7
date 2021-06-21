@@ -11,7 +11,7 @@ const ICON_SIZE = 30;
 const ICON_URL_DEFAULT = 'img/pin.svg';
 const ICON_URL_ACTIVE = 'img/pin-active.svg';
 
-function Map({offers, city, selectedPoint}) {
+function Map({offers, city, activePlaceCard}) {
   const mapContainerRef = useRef(null);
   const map = useMap(mapContainerRef, city);
 
@@ -27,10 +27,6 @@ function Map({offers, city, selectedPoint}) {
     iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
   });
 
-  if (!selectedPoint) {
-    selectedPoint = 5; // Временное решение
-  }
-
   useEffect(() => {
     const markers = leaflet.layerGroup();
 
@@ -43,9 +39,7 @@ function Map({offers, city, selectedPoint}) {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id === selectedPoint.id)
-              ? activeIcon
-              : defaultIcon,
+            icon: (offer.id === activePlaceCard) ? activeIcon : defaultIcon,
           })
           .addTo(markers);
       });
@@ -62,7 +56,7 @@ function Map({offers, city, selectedPoint}) {
     return () => {
       markers.clearLayers();
     };
-  }, [map, offers, selectedPoint]);
+  }, [map, offers, activePlaceCard]);
 
   return (
     <div id="map" style={{height: '100%'}} ref={mapContainerRef} />
@@ -79,11 +73,12 @@ Map.propTypes = {
     }),
     name: PropTypes.string.isRequired,
   }).isRequired,
-  selectedPoint: offersProp,
+  activePlaceCard: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  activePlaceCard: state.activePlaceCard,
 });
 
 export {Map};

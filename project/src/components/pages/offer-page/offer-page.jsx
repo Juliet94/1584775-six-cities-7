@@ -137,7 +137,7 @@ function OfferPage({offers, reviews, city, changeActiveCard}) {
           <section className="property__map map" >
             <Map
               offers={offers}
-              city={offers.find((offerItem) => offerItem.city.name === city).city}
+              city={city}
             />
           </section>
         </section>

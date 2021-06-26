@@ -30,7 +30,7 @@ function MainPage({offers, city, sortType}) {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} {offers.length > 1 ? 'places' : 'place'} to stay in {city}</b>
+                <b className="places__found">{offers.length} {offers.length > 1 ? 'places' : 'place'} to stay in {city.name}</b>
                 <SortForm sortType={sortType}/>
                 <div className="cities__places-list places__list tabs__content">
                   <PlaceCardList
@@ -43,13 +43,13 @@ function MainPage({offers, city, sortType}) {
                 <section className="cities__map map">
                   <Map
                     offers={offers}
-                    city={offers.find((offer) => offer.city.name === city).city}
+                    city={city}
                   />
                 </section>
               </div>
             </div>
           </div>
-        ) : <MainEmpty city={city}/>}
+        ) : <MainEmpty city={city.name}/>}
       </main>
     </div>
   );

@@ -38,7 +38,7 @@ function SortForm({sortType, changeSort}) {
 
 SortForm.propTypes = {
   changeSort: PropTypes.func.isRequired,
-  sortType: PropTypes.object.isRequired,
+  sortType: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = {

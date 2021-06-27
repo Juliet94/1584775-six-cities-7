@@ -9,11 +9,14 @@ import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-route';
 
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
-function App({isDataLoaded}) {
-  if (!isDataLoaded) {
+function App({isDataLoaded, authorizationStatus}) {
+  const isCheckedAuth = (auth) => auth === AuthorizationStatus.UNKNOWN;
+
+  if (!isDataLoaded || isCheckedAuth(authorizationStatus)) {
     return (
       <LoadingScreen />
     );
@@ -28,9 +31,12 @@ function App({isDataLoaded}) {
         <Route exact path={AppRoute.OFFER}>
           <OfferPage />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesPage />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
         </Route>
@@ -44,10 +50,12 @@ function App({isDataLoaded}) {
 
 App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export {App};

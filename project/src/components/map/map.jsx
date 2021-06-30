@@ -77,7 +77,6 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
   activePlaceCard: state.activePlaceCard,
 });
 

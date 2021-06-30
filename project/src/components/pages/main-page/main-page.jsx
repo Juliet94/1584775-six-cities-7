@@ -57,8 +57,8 @@ function MainPage({offers, city, sortType}) {
 
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
-  city: PropTypes.string.isRequired,
-  sortType: PropTypes.object.isRequired,
+  city: PropTypes.object.isRequired,
+  sortType: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

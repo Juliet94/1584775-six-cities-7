@@ -11,13 +11,27 @@ import ReviewForm from '../../review-form/review-form';
 import ReviewList from '../../review-list/review-list';
 import Map from '../../map/map';
 import LoadingScreen from "../../loading-screen/loading-screen";
+import NotFoundPage from "../not-found-page/not-found-page";
 
 import {Colors, placeCardPageType} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
 import {ActionCreator} from '../../../store/action';
 import {fetchOffer, fetchNearbyOffersList, fetchReviewsList} from "../../../store/api-actions";
 
-function OfferPage({offer, nearbyOffers, reviews, city, changeActiveCard, fetchOffer, fetchNearbyOffersList, fetchReviewsList, isOfferDataLoaded, setIsOfferDataLoaded}) {
+function OfferPage({
+  offer,
+  nearbyOffers,
+  reviews,
+  city,
+  changeActiveCard,
+  fetchOffer,
+  fetchNearbyOffersList,
+  fetchReviewsList,
+  isOfferDataLoaded,
+  isDataLoadError,
+  setIsOfferDataLoaded,
+   setIsDataLoadError,
+}) {
   const location = useLocation();
 
   const offerId = +location.pathname.replace('/offer/', '');
@@ -48,8 +62,15 @@ function OfferPage({offer, nearbyOffers, reviews, city, changeActiveCard, fetchO
     return () => {
     changeActiveCard(null);
     setIsOfferDataLoaded(false);
+    setIsDataLoadError(false);
     };
   }, [offerId]);
+
+  if (isDataLoadError) {
+    return (
+      <NotFoundPage />
+    );
+  }
 
   if (!isOfferDataLoaded) {
     return (
@@ -182,6 +203,7 @@ const mapStateToProps = (state) => ({
   city: state.city,
   isOfferDataLoaded: state.isOfferDataLoaded,
   nearbyOffers: state.nearbyOffers,
+  isDataLoadError: state.isDataLoadError,
 });
 
 const mapDispatchToProps = {
@@ -190,6 +212,7 @@ const mapDispatchToProps = {
   fetchNearbyOffersList: fetchNearbyOffersList,
   fetchReviewsList: fetchReviewsList,
   setIsOfferDataLoaded: ActionCreator.setIsOfferDataLoaded,
+  setIsDataLoadError: ActionCreator.setIsDataLoadError,
 };
 
 export {OfferPage};

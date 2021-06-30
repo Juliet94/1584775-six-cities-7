@@ -15,6 +15,7 @@ export const fetchNearbyOffersList = (id) => (dispatch, _getState, api) => (
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadOffer(adaptOfferToClient(data))))
+    .catch(() => dispatch(ActionCreator.setIsDataLoadError(true)))
 );
 
 export const fetchReviewsList = (id) => (dispatch, _getState, api) => (

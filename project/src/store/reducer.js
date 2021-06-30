@@ -15,6 +15,7 @@ const initialState = {
   activePlaceCard: null,
   isDataLoaded: false,
   isOfferDataLoaded: false,
+  isDataLoadError: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   userData: {},
 };
@@ -70,6 +71,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isOfferDataLoaded: action.payload,
+      };
+    case ActionType.SET_IS_DATA_LOAD_ERROR:
+      return {
+        ...state,
+        isDataLoadError: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

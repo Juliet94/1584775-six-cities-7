@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const RATINGS = [
   {
@@ -23,9 +24,9 @@ const RATINGS = [
   },
 ];
 
-function ReviewRatingStars() {
+function ReviewRatingStars({onRatingChange}) {
   return (
-    <>
+    <div className="reviews__rating-form form__rating" onChange={onRatingChange}>
       {RATINGS.map((rate) => (
         <React.Fragment key={rate.id}>
           <input className="form__rating-input visually-hidden" name="rating" value={rate.id} id={`${rate.id}-stars`} type="radio"/>
@@ -36,8 +37,12 @@ function ReviewRatingStars() {
           </label>
         </React.Fragment>
       ))}
-    </>
+    </div>
   );
 }
+
+ReviewRatingStars.propTypes = {
+  onRatingChange: PropTypes.func.isRequired,
+};
 
 export default ReviewRatingStars;

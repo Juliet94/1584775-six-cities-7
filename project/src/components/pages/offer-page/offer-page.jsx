@@ -10,16 +10,33 @@ import Header from '../../header/header';
 import ReviewForm from '../../review-form/review-form';
 import ReviewList from '../../review-list/review-list';
 import Map from '../../map/map';
+import LoadingScreen from '../../loading-screen/loading-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-import {Colors, placeCardPageType} from '../../../const';
+import {Colors, placeCardPageType, AuthorizationStatus} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
 import {ActionCreator} from '../../../store/action';
+import {fetchOffer, fetchNearbyOffersList, fetchReviewsList} from '../../../store/api-actions';
 
-function OfferPage({offers, reviews, city, changeActiveCard}) {
+function OfferPage({
+  offer,
+  nearbyOffers,
+  reviews,
+  city,
+  changeActiveCard,
+  getOffer,
+  getNearbyOffersList,
+  getReviewsList,
+  isOfferDataLoaded,
+  isDataLoadError,
+  setIsOfferDataLoaded,
+  setIsDataLoadError,
+  authorizationStatus,
+}) {
   const location = useLocation();
 
-  const nearOffers = offers.filter((offerItem) => offerItem.id !== location.state);
-  const offer = offers.find((offerItem) => offerItem.id === location.state);
+  const offerId = +location.pathname.replace('/offer/', '');
+  changeActiveCard(offerId);
 
   const {
     images,
@@ -36,11 +53,31 @@ function OfferPage({offers, reviews, city, changeActiveCard}) {
     description,
   } = offer;
 
-  const placeRating = getPlaceRatingPercent(rating);
+  const placeRating = getPlaceRatingPercent(rating ? rating : 0);
 
-  useEffect(() => () => {
-    changeActiveCard(null);
-  });
+  useEffect(() => {
+    getOffer(offerId);
+    getNearbyOffersList(offerId);
+    getReviewsList(offerId);
+
+    return () => {
+      changeActiveCard(null);
+      setIsOfferDataLoaded(false);
+      setIsDataLoadError(false);
+    };
+  }, [offerId, AuthorizationStatus]);
+
+  if (isDataLoadError) {
+    return (
+      <NotFoundPage />
+    );
+  }
+
+  if (!isOfferDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">
@@ -130,13 +167,15 @@ function OfferPage({offers, reviews, city, changeActiveCard}) {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.AUTH && (
+                  <ReviewForm id={offerId}/>
+                )}
               </section>
             </div>
           </div>
           <section className="property__map map" >
             <Map
-              offers={offers}
+              offers={nearbyOffers.concat(offer)}
               city={city}
             />
           </section>
@@ -145,7 +184,7 @@ function OfferPage({offers, reviews, city, changeActiveCard}) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceCardList offers={nearOffers} pageType={placeCardPageType.offer}/>
+              <PlaceCardList offers={nearbyOffers} pageType={placeCardPageType.offer}/>
             </div>
           </section>
         </div>
@@ -155,20 +194,38 @@ function OfferPage({offers, reviews, city, changeActiveCard}) {
 }
 
 OfferPage.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+  offer: offersProp,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
-  city: PropTypes.string.isRequired,
+  city: PropTypes.object.isRequired,
   changeActiveCard: PropTypes.func.isRequired,
+  isOfferDataLoaded: PropTypes.bool.isRequired,
+  nearbyOffers: PropTypes.arrayOf(offersProp),
+  isDataLoadError: PropTypes.arrayOf(offersProp),
+  authorizationStatus: PropTypes.string.isRequired,
+  getOffer: PropTypes.func.isRequired,
+  getNearbyOffersList: PropTypes.func.isRequired,
+  getReviewsList: PropTypes.func.isRequired,
+  setIsOfferDataLoaded: PropTypes.func.isRequired,
+  setIsDataLoadError: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offer: state.offer,
   reviews: state.reviews,
   city: state.city,
+  isOfferDataLoaded: state.isOfferDataLoaded,
+  nearbyOffers: state.nearbyOffers,
+  isDataLoadError: state.isDataLoadError,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = {
   changeActiveCard: ActionCreator.changeActiveCard,
+  getOffer: fetchOffer,
+  getNearbyOffersList: fetchNearbyOffersList,
+  getReviewsList: fetchReviewsList,
+  setIsOfferDataLoaded: ActionCreator.setIsOfferDataLoaded,
+  setIsDataLoadError: ActionCreator.setIsDataLoadError,
 };
 
 export {OfferPage};

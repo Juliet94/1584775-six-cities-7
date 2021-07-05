@@ -39,7 +39,7 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard, change
         </div>
       )}
       <div className={`${pageType.classListElementWrapper} place-card__image-wrapper`}>
-        <Link to={{pathname: generatePath(AppRoute.OFFER, { id }), state: id }}>
+        <Link to={{pathname: generatePath(AppRoute.OFFER, { id })}}>
           <img className="place-card__image" src={previewImage} width={pageType.cardImageWidth} height={pageType.cardImageHeight} alt="Place image" />
         </Link>
       </div>
@@ -66,7 +66,7 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard, change
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={{pathname: generatePath(AppRoute.OFFER, { id }), state: id }}>{title}</Link>
+          <Link to={{pathname: generatePath(AppRoute.OFFER, { id })}}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -1,14 +1,15 @@
 import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
 import {Link, useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import Header from '../../header/header';
 
 import {login} from '../../../store/api-actions';
 import {AppRoute} from '../../../const';
 
-function LoginPage({onSubmit}) {
+function LoginPage() {
+  const dispatch = useDispatch();
+
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -17,10 +18,10 @@ function LoginPage({onSubmit}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: emailRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
 
     history.push(AppRoute.MAIN);
   };
@@ -78,13 +79,4 @@ function LoginPage({onSubmit}) {
   );
 }
 
-LoginPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-  onSubmit: login,
-};
-
-export {LoginPage};
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default LoginPage;

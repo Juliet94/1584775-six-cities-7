@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {SortType} from '../../const';
-import {ActionCreator} from '../../store/action';
+import {changeSort} from '../../store/action';
 
 const sorts = Object.values(SortType);
 
-function SortForm({sortType, changeSort}) {
+function SortForm({sortType}) {
+  const dispatch = useDispatch();
   const [sortIsOpen, setSortIsOpen] = useState(false);
 
   const toggleSort = () => setSortIsOpen(!sortIsOpen);
@@ -26,7 +27,7 @@ function SortForm({sortType, changeSort}) {
             key={sort}
             className={`${sortType === sort ? 'places__option--active' : ''} places__option`}
             tabIndex="0"
-            onClick={() => changeSort(sort)}
+            onClick={() => dispatch(changeSort(sort))}
           >
             {sort}
           </li>
@@ -37,13 +38,7 @@ function SortForm({sortType, changeSort}) {
 }
 
 SortForm.propTypes = {
-  changeSort: PropTypes.func.isRequired,
   sortType: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = {
-  changeSort: ActionCreator.changeSort,
-};
-
-export {SortForm};
-export default connect(null, mapDispatchToProps)(SortForm);
+export default SortForm;

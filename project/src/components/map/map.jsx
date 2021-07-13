@@ -1,8 +1,9 @@
 import React, {useRef, useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import offersProp from '../app/offers.prop';
 import useMap from '../../hooks/useMap';
+import {getActivePlaceCard} from '../../store/offers/selectors';
 
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -11,7 +12,9 @@ const ICON_SIZE = 30;
 const ICON_URL_DEFAULT = 'img/pin.svg';
 const ICON_URL_ACTIVE = 'img/pin-active.svg';
 
-function Map({offers, city, activePlaceCard}) {
+function Map({offers, city}) {
+  const activePlaceCard = useSelector(getActivePlaceCard);
+
   const mapContainerRef = useRef(null);
   const map = useMap(mapContainerRef, city);
 
@@ -73,12 +76,6 @@ Map.propTypes = {
     }),
     name: PropTypes.string.isRequired,
   }).isRequired,
-  activePlaceCard: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  activePlaceCard: state.activePlaceCard,
-});
-
-export {Map};
-export default connect(mapStateToProps)(Map);
+export default Map;

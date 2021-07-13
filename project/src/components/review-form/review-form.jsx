@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import ReviewRatingStars from '../review-rating-stars/review-rating-stars';
 import {postReview} from '../../store/api-actions';
 
-function ReviewForm({id, sendReview}) {
+function ReviewForm({id}) {
+  const dispatch = useDispatch();
   const [userReview, setUserReview] = useState({rating: '', text: ''});
 
   const onFormSubmit = (evt) => {
     evt.preventDefault();
 
-    sendReview(id, userReview.text, userReview.rating);
+    dispatch(postReview(id, userReview.text, userReview.rating));
     setUserReview({rating: '', text: ''});
   };
   const onTextChange = ({target}) => {
@@ -45,12 +46,6 @@ function ReviewForm({id, sendReview}) {
 
 ReviewForm.propTypes = {
   id: PropTypes.number.isRequired,
-  sendReview: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  sendReview: postReview,
-};
-
-export {ReviewForm};
-export default connect(null, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

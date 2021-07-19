@@ -3,9 +3,11 @@ import {useDispatch} from 'react-redux';
 import {Link, generatePath} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offersProp from '../app/offers.prop';
-import {changeActiveCard} from '../../store/action';
 
-import {AppRoute, Colors, placeCardPageType} from '../../const';
+import FavoritesButton from '../favorites-button/favorites-button';
+
+import {changeActiveCard} from '../../store/action';
+import {AppRoute, placeCardPageType} from '../../const';
 import {getPlaceRatingPercent} from '../../utils/place-card';
 
 function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
@@ -42,7 +44,7 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
       )}
       <div className={`${pageType.classListElementWrapper} place-card__image-wrapper`}>
         <Link to={{pathname: generatePath(AppRoute.OFFER, { id })}}>
-          <img className="place-card__image" src={previewImage} width={pageType.cardImageWidth} height={pageType.cardImageHeight} alt="Place image" />
+          <img className="place-card__image" src={previewImage} width={pageType.cardImageWidth} height={pageType.cardImageHeight} alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -51,15 +53,7 @@ function PlaceCard({offer, pageType, setActivePlaceCard, activePlaceCard}) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19"
-              style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
-                fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}
-            >
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoritesButton isFavorite={isFavorite} id={id}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

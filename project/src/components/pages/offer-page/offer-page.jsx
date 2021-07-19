@@ -9,8 +9,9 @@ import ReviewList from '../../review-list/review-list';
 import Map from '../../map/map';
 import LoadingScreen from '../../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
+import FavoritesButton from '../../favorites-button/favorites-button';
 
-import {Colors, placeCardPageType, AuthorizationStatus} from '../../../const';
+import {placeCardButtonType, placeCardPageType, AuthorizationStatus} from '../../../const';
 import {getPlaceRatingPercent} from '../../../utils/place-card';
 import {changeActiveCard, setIsOfferDataLoaded, setIsDataLoadError} from '../../../store/action';
 import {fetchOffer, fetchNearbyOffersList, fetchReviewsList} from '../../../store/api-actions';
@@ -47,6 +48,7 @@ function OfferPage() {
     goods,
     host,
     description,
+    id,
   } = offer;
 
   const placeRating = getPlaceRatingPercent(rating ? rating : 0);
@@ -84,7 +86,7 @@ function OfferPage() {
             <div className="property__gallery">
               {images.map((image) => (
                 <div className="property__image-wrapper" key={image}>
-                  <img className="property__image" src={image} alt="Photo studio"/>
+                  <img className="property__image" src={image} alt={type}/>
                 </div>),
               )}
             </div>
@@ -100,15 +102,7 @@ function OfferPage() {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33"
-                    style={{stroke: isFavorite ? Colors.FAVORITE_CHECKED : Colors.FAVORITE_NOT_CHECKED,
-                      fill: isFavorite ? Colors.FAVORITE_CHECKED : null}}
-                  >
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoritesButton id={id} isFavorite={isFavorite} buttonType={placeCardButtonType.offer} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

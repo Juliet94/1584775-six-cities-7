@@ -30,6 +30,19 @@ export const placeCardPageType = {
   },
 };
 
+export const placeCardButtonType = {
+  card: {
+    class: 'place-card__bookmark-button button',
+    width: 18,
+    height: 19,
+  },
+  offer: {
+    class: 'property__bookmark-button button',
+    width: 31,
+    height: 33,
+  },
+};
+
 export const Colors = {
   FAVORITE_CHECKED: '#4481c3',
   FAVORITE_NOT_CHECKED: '#979797',
@@ -48,6 +61,7 @@ export const APIRoute = {
   OFFERS: '/hotels',
   NEARBY_OFFERS: '/nearby',
   REVIEWS: '/comments',
+  FAVORITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };

@@ -11,6 +11,7 @@ function ReviewItem({review}) {
   } = review;
 
   const reviewRating = getPlaceRatingPercent(rating);
+  const reviewDate = new Date(date).toLocaleDateString('en-US', {year: 'numeric', month: 'long'})
 
   return (
     <li className="reviews__item">
@@ -30,7 +31,7 @@ function ReviewItem({review}) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date.slice(0, 10)}>{date.slice(0, 10)}</time>
+        <time className="reviews__time" dateTime={date}>{reviewDate}</time>
       </div>
     </li>
   );

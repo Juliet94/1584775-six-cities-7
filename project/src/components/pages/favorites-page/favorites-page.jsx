@@ -1,10 +1,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
 import FavoritesEmpty from '../../favorites-empty/favorites-empty';
+import Footer from '../../footer/footer';
 
 import {AppRoute} from '../../../const';
 import {getFavorites} from '../../../store/data/selectors';
@@ -30,11 +30,7 @@ function FavoritesPage() {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <Link className="footer__logo-link" to={AppRoute.MAIN}>
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </Link>
-      </footer>
+      <Footer />     
     </div>
   );
 }

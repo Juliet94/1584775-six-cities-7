@@ -19,6 +19,8 @@ import {getOffer, getReviews, getNearbyOffers, getIsOfferDataLoaded, getIsDataLo
 import {getActiveCity} from '../../../store/offers/selectors';
 import {getAuthorizationStatus} from '../../../store/user/selectors';
 
+const MAX_IMG_COUNT = 6;
+
 function OfferPage() {
   const dispatch = useDispatch();
 
@@ -84,7 +86,7 @@ function OfferPage() {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => (
+              {images.slice(0, MAX_IMG_COUNT).map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt={type}/>
                 </div>),

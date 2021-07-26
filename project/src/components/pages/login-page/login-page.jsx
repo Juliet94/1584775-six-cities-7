@@ -1,26 +1,35 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Header from '../../header/header';
 
 import {login} from '../../../store/api-actions';
-import {AppRoute} from '../../../const';
+import {AppRoute, AuthorizationStatus} from '../../../const';
+import {getAuthorizationStatus} from "../../../store/user/selectors";
 
 function LoginPage() {
   const dispatch = useDispatch();
+  const auth = useSelector(getAuthorizationStatus);
+  const history = useHistory();
+  const [password, setPassword] = useState('');
+
+  if (auth === AuthorizationStatus.AUTH) {
+    history.push(AppRoute.MAIN);
+  }
 
   const emailRef = useRef(null);
-  const passwordRef = useRef(null);
 
-  const history = useHistory();
+  const handleChange = (evt) => {
+    setPassword(evt.target.value.trim());
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     dispatch(login({
       login: emailRef.current.value,
-      password: passwordRef.current.value,
+      password: password,
     }));
 
     history.push(AppRoute.MAIN);
@@ -47,18 +56,19 @@ function LoginPage() {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  required=""
+                  required="true"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
+                  onChange={handleChange}
                   className="login__input form__input"
                   type="password"
                   name="password"
                   placeholder="Password"
-                  required=""
+                  required="true"
+                  value={password}
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">

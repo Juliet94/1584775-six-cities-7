@@ -27,7 +27,10 @@ function SortForm({sortType}) {
             key={sort}
             className={`${sortType === sort ? 'places__option--active' : ''} places__option`}
             tabIndex="0"
-            onClick={() => dispatch(changeSort(sort))}
+            onClick={() => {
+              dispatch(changeSort(sort));
+              toggleSort();
+            }}
           >
             {sort}
           </li>

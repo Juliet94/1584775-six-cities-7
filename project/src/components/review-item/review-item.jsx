@@ -11,7 +11,7 @@ function ReviewItem({review}) {
   } = review;
 
   const reviewRating = getPlaceRatingPercent(rating);
-  const reviewDate = new Date(date).toLocaleDateString('en-US', {year: 'numeric', month: 'long'})
+  const reviewDate = new Date(date).toLocaleDateString('en-US', {year: 'numeric', month: 'long'});
 
   return (
     <li className="reviews__item">

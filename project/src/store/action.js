@@ -13,6 +13,7 @@ export const ActionType = {
   UPDATE_FAVORITES: 'data/updateFavorites',
   SET_IS_DATA_LOAD_ERROR: 'data/setIsDataLoadError',
   SET_IS_OFFER_DATA_LOADED: 'data/setIsOfferDataLoaded',
+  SET_IS_REVIEW_SENDING: 'data/setIsReviewSending',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   GET_USER_DATA: 'user/getUserData',
@@ -63,6 +64,10 @@ export const setIsOfferDataLoaded = createAction(ActionType.SET_IS_OFFER_DATA_LO
 }));
 
 export const setIsDataLoadError = createAction(ActionType.SET_IS_DATA_LOAD_ERROR, (value) => ({
+  payload: value,
+}));
+
+export const setIsReviewSending = createAction(ActionType.SET_IS_REVIEW_SENDING, (value) => ({
   payload: value,
 }));
 

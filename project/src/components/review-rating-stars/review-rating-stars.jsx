@@ -24,12 +24,19 @@ const RATINGS = [
   },
 ];
 
-function ReviewRatingStars({onRatingChange}) {
+function ReviewRatingStars({handleRatingChange, rateChecked}) {
   return (
-    <div className="reviews__rating-form form__rating" onChange={onRatingChange}>
+    <div className="reviews__rating-form form__rating" onChange={handleRatingChange}>
       {RATINGS.map((rate) => (
         <React.Fragment key={rate.id}>
-          <input className="form__rating-input visually-hidden" name="rating" value={rate.id} id={`${rate.id}-stars`} type="radio"/>
+          <input
+            className="form__rating-input visually-hidden"
+            name="rating"
+            value={rate.id}
+            id={`${rate.id}-stars`}
+            type="radio"
+            checked={rateChecked === rate.id}
+          />
           <label htmlFor={`${rate.id}-stars`} className="reviews__rating-label form__rating-label" title={rate.title}>
             <svg className="form__star-image" width="37" height="33">
               <use xlinkHref="#icon-star"/>
@@ -42,7 +49,8 @@ function ReviewRatingStars({onRatingChange}) {
 }
 
 ReviewRatingStars.propTypes = {
-  onRatingChange: PropTypes.func.isRequired,
+  handleRatingChange: PropTypes.func.isRequired,
+  rateChecked: PropTypes.number.isRequired,
 };
 
 export default ReviewRatingStars;

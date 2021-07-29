@@ -7,6 +7,7 @@ import {
   updateFavorites,
   setIsOfferDataLoaded,
   setIsDataLoadError,
+  setIsReviewSending,
   fillOffersList
 } from '../action';
 import {createReducer} from '@reduxjs/toolkit';
@@ -22,6 +23,7 @@ const initialState = {
   isDataLoaded: false,
   isOfferDataLoaded: false,
   isDataLoadError: false,
+  isReviewSending: false,
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -70,6 +72,9 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(setIsDataLoadError, (state, action) => {
       state.isDataLoadError = action.payload;
+    })
+    .addCase(setIsReviewSending, (state, action) => {
+      state.isReviewSending = action.payload;
     });
 });
 

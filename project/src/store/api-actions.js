@@ -1,4 +1,14 @@
-import {loadOffers, loadNearbyOffers, loadOffer, setIsDataLoadError, loadReviews, loadFavorites, updateFavorites, requireAuthorization, getUserData, logout as closeSession} from './action';
+import {loadOffers,
+  loadNearbyOffers,
+  loadOffer,
+  setIsDataLoadError,
+  setIsReviewSending,
+  loadReviews,
+  loadFavorites,
+  updateFavorites,
+  requireAuthorization,
+  getUserData,
+  logout as closeSession} from './action';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {adaptOfferToClient, adaptUserToClient, adaptReviewToClient} from './adapter';
 
@@ -53,11 +63,14 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(closeSession()))
 );
 
-export const postReview = (id, comment, rating) => (dispatch, _getState, api) => (
+export const postReview = (id, comment, rating) => (dispatch, _getState, api) => {
+  dispatch(setIsReviewSending(true));
   api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating})
-    .then(({data}) => dispatch(loadReviews(data.map(adaptReviewToClient))))
-
-);
+    .then(({data}) => {
+      dispatch(setIsReviewSending(false));
+      dispatch(loadReviews(data.map(adaptReviewToClient)));
+    });
+};
 
 export const postFavorite = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${id}/${status}`)

@@ -3,8 +3,6 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
-import {AppRoute} from '../../const';
-
 function FavoritesEmpty() {
   return (
     <div className="page page--favorites-empty">

@@ -6,7 +6,7 @@ import Header from '../../header/header';
 
 import {login} from '../../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../../const';
-import {getAuthorizationStatus} from "../../../store/user/selectors";
+import {getAuthorizationStatus} from '../../../store/user/selectors';
 
 function LoginPage() {
   const dispatch = useDispatch();

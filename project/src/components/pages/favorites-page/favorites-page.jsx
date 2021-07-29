@@ -6,7 +6,6 @@ import FavoritesList from '../../favorites-list/favorites-list';
 import FavoritesEmpty from '../../favorites-empty/favorites-empty';
 import Footer from '../../footer/footer';
 
-import {AppRoute} from '../../../const';
 import {getFavorites} from '../../../store/data/selectors';
 
 function FavoritesPage() {
@@ -30,7 +29,7 @@ function FavoritesPage() {
           </section>
         </div>
       </main>
-      <Footer />     
+      <Footer />
     </div>
   );
 }

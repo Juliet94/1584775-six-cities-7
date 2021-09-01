@@ -28,3 +28,16 @@ jobs:
       working-directory: ./project
       run: |
         npm test
+        
+    - name: Build
+      working-directory: ./project
+      run: |
+        npm run build
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.CITIES_DEPLOY }}
+        BRANCH: gh-pages
+        FOLDER: public
+        CLEAN: true    
